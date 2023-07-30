@@ -7,18 +7,35 @@ permissions:
   contents: read
 
 jobs:
-  build:
+  generate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-        with:
-          path: "self"
       - name: Run Goosepaper
         uses: addnab/docker-run-action@v3
         with:
           image: j6k4m8/goosepaper:latest
-          options: -v ${{ github.workspace }}/self:/goosepaper/mount
-          run: goosepaper -c mount/config.json -o mount/Goosepaper.pdf
-      - name: Test with pytest
-        run: |
-          ls -la ./self
+          options: -v ${{ github.workspace }}:/goosepaper/mount
+          run: goosepaper -c mount/config.json -o mount/generated.pdf
+      - uses: actions/upload-artifact@v3
+        with:
+          name: goosepaper
+          path: ./generated.pdf
+  upload:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          repository: juruen/rmapi
+      - uses: actions/download-artifact@v3
+        with:
+          name: goosepaper
+          path: ./generated.pdf
+      - uses: docker/build-push-action@v4
+        with:
+          tags: rmapi:latest
+          push: false
+      - uses: addnab/docker-run-action@v3
+        with:
+          image: rmapi:latest
+          run: rmapi help
