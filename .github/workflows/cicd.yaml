@@ -17,7 +17,8 @@ jobs:
           image: j6k4m8/goosepaper:latest
           options: -v ${{ github.workspace }}:/goosepaper/mount
           run: goosepaper -c mount/config.json -o mount/generated.pdf
-      - uses: actions/upload-artifact@v3
+      - name: Upload generated pdf artifact
+        uses: actions/upload-artifact@v3
         with:
           name: goosepaper
           path: ./generated.pdf
@@ -29,11 +30,19 @@ jobs:
         run: |
           wget https://github.com/juruen/rmapi/releases/download/v0.0.25/rmapi-linuxx86-64.tar.gz
           tar -xvzf rmapi-linuxx86-64.tar.gz
-      - uses: actions/download-artifact@v3
+      - name: Download generated pdf artifact
+        uses: actions/download-artifact@v3
         with:
           name: goosepaper
           path: ./generated.pdf
-      - run: |
-          pwd
-          ls -la
-      - run: ./rmapi version
+      - name: Prepare rmapi.conf
+        shell: bash
+        env:
+          RMAPI_CONFIG_FILE_BASE64: ${{ secrets.RMAPI_CONFIG_FILE_BASE64 }}
+        run: |
+          echo "$RMAPI_CONFIG_FILE_BASE64" | base64 -d > rmapi.conf
+      - shell: bash
+        env:
+          RMAPI_CONFIG: ./rmapi.conf
+        run: |
+          ./rmapi ls
