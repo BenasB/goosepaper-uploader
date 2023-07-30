@@ -1,0 +1,24 @@
+name: Generate Goosepaper and upload
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          path: "self"
+      - name: Run Goosepaper
+        uses: addnab/docker-run-action@v3
+        with:
+          image: j6k4m8/goosepaper:latest
+          options: -v ${{ github.workspace }}/self:/goosepaper/mount
+          run: goosepaper -c mount/config.json -o mount/Goosepaper.pdf
+      - name: Test with pytest
+        run: |
+          ls -la ./self

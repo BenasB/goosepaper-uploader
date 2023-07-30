@@ -1,0 +1,39 @@
+{
+  "font_size": 12,
+  "title": "Beno kasdienis laikraštis",
+  "stories": [
+    {
+      "provider": "weather",
+      "config": {
+        "lat": 54.687157,
+        "lon": 25.279652,
+        "F": false
+      }
+    },
+    {
+      "provider": "wikipedia_current_events",
+      "config": {}
+    },
+    {
+      "provider": "rss",
+      "config": {
+        "rss_path": "https://www.theguardian.com/world/europe-news/rss",
+        "limit": 5
+      }
+    },
+    {
+      "provider": "rss",
+      "config": {
+        "rss_path": "https://www.theguardian.com/science/rss",
+        "limit": 3
+      }
+    },
+    {
+      "provider": "rss",
+      "config": {
+        "rss_path": "https://www.lrt.lt/naujienos/lietuvoje?rss",
+        "limit": 3
+      }
+    }
+  ]
+}
