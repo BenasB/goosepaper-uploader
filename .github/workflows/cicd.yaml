@@ -1,9 +1,8 @@
 name: Generate Goosepaper and upload
 
 on:
-  workflow_dispatch:
   schedule:
-    - cron: "18 * * * *"
+    - cron: "21 * * * *"
 
 permissions:
   contents: read
