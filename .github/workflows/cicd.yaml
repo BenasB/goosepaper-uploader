@@ -3,7 +3,7 @@ name: Generate Goosepaper and upload
 on:
   workflow_dispatch:
   schedule:
-    - cron: "13 * * * *"
+    - cron: "18 * * * *"
 
 permissions:
   contents: read
