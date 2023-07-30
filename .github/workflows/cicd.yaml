@@ -26,7 +26,7 @@ jobs:
     needs: generate
     steps:
       - run: |
-        ls -la
+          ls -la
       - name: Set up rmapi
         run: |
           wget https://github.com/juruen/rmapi/releases/download/v0.0.25/rmapi-linuxx86-64.tar.gz
