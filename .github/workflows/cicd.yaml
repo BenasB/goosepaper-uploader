@@ -35,6 +35,7 @@ jobs:
         with:
           name: goosepaper
           path: ./generated.pdf
+          retention-days: 7
       - name: Prepare rmapi.conf
         shell: bash
         env:
