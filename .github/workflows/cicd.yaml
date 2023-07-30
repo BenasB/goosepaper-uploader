@@ -25,9 +25,15 @@ jobs:
     runs-on: ubuntu-latest
     needs: generate
     steps:
+      - run: |
+        ls -la
       - name: Set up rmapi
         run: |
-          curl https://github.com/juruen/rmapi/releases/download/v0.0.25/rmapi-linuxx86-64.tar.gz --output rmapi.tar.gz
-          tar -xf rmapi.tar.gz
+          wget https://github.com/juruen/rmapi/releases/download/v0.0.25/rmapi-linuxx86-64.tar.gz
+          tar -xvzf rmapi-linuxx86-64.tar.gz
+      - uses: actions/download-artifact@v3
+        with:
+          name: goosepaper
+          path: ./generated.pdf
       - run: |
           ls -la
