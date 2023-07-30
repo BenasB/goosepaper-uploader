@@ -32,13 +32,11 @@ jobs:
         with:
           name: goosepaper
           path: ./generated.pdf
-      - run: |
-          pwd
-          ls -la
       - uses: docker/build-push-action@v4
         with:
           tags: rmapi:latest
           push: false
+          context: .
       - uses: addnab/docker-run-action@v3
         with:
           image: rmapi:latest
